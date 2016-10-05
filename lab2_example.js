@@ -11,7 +11,7 @@
  
 var blueAnimalX = 140;
 var blueAnimalY = 430;
-var blueAnimalScale = .6;
+var blueAnimalScale = .8;
 
 var birdX = 261;
 var birdY = 256;
