@@ -1,12 +1,7 @@
-/* All code created by Ryan Solorzano
- * Modeled after Blex Bolex's "Storm" 
+/* All code created by Ryan Solorzano and Jessica Xu
+ * Modeled after Blex Bolex's "Storm" and "Un Distrait" 
  * CPE 123 (Computational Art)
- * 10/5/16
- *
- * Note: All animal translations are from the top left, as if it were encased in a box
- * Apologies in advance for all the custom shapes... this drawing has weird things to draw
- *
- * TODO: Put points on end of lightning, fix wings on bird
+ * 10/7/16
  */
  
 var blueAnimalX = 43;
@@ -26,7 +21,7 @@ var greenAnimalY = 69;
 var greenAnimalScale = 1;
 
 function setup() {
-	createCanvas(560, 722);
+	createCanvas(560, 560);
 }
 
 function draw() {
@@ -170,7 +165,6 @@ function drawStormPainting() {
 
 	drawBird(birdX, birdY, birdScale);
 
-	drawText();
 }
 
 
