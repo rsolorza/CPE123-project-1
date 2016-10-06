@@ -1,41 +1,44 @@
-/* All code created by Ryan Solorzano
- * Modeled after Blex Bolex's "Storm" 
+/* All code created by Ryan Solorzano and Jessica Xu
+ * Modeled after Blex Bolex's "Storm" and "Un Distrait" 
  * CPE 123 (Computational Art)
- * 10/5/16
- *
- * Note: All animal translations are from the top left, as if it were encased in a box
- * Apologies in advance for all the custom shapes... this drawing has weird things to draw
- *
- * TODO: Put points on end of lightning, fix wings on bird
+ * 10/7/16
  */
  
-var blueAnimalX = 140;
-var blueAnimalY = 430;
-var blueAnimalScale = .8;
+var blueAnimalX = 43;
+var blueAnimalY = 299;
+var blueAnimalScale = 1;
 
-var birdX = 261;
-var birdY = 256;
-var birdScale = 2;
+var birdX = 307;
+var birdY = 331;
+var birdScale = 1;
 
-var redAnimalX = 235;
-var redAnimalY = 20;
-var redAnimalScale = .5;
+var redAnimalX = 185;
+var redAnimalY = 55;
+var redAnimalScale = 1;
 
-var greenAnimalX = 100;
-var greenAnimalY = 130;
-var greenAnimalScale = .45;
+var greenAnimalX = 0;
+var greenAnimalY = 69;
+var greenAnimalScale = 1;
 
 function setup() {
-	createCanvas(400, 516);
+	createCanvas(560, 560);
 }
 
 function draw() {
-	background(41, 91, 91);
-
 	// Debugging
 	if(mouseIsPressed) {
 		console.log((mouseX) + "\n" + (mouseY));
 	}
+
+	push();
+	scale(1.4);
+		drawStormPainting();
+	pop();
+}
+
+function drawStormPainting() {
+	background(41, 91, 91);
+
 	// Far Left Blue lightning Bolt
 	noFill();
 	strokeCap(SQUARE);
@@ -162,7 +165,6 @@ function draw() {
 
 	drawBird(birdX, birdY, birdScale);
 
-	drawText();
 }
 
 
