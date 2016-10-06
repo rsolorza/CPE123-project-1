@@ -20,7 +20,7 @@ var greenAnimalX = 0;
 var greenAnimalY = 69;
 var greenAnimalScale = 1;
 
-var px=300, py =300, mx = 0, my = 0, rot = 0, sc=1;
+var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
 
 function setup() {
 	createCanvas(560, 1377);
@@ -158,6 +158,33 @@ function drawUnDistrait () {
   
   	//man in suit 
   	manInSuit(px,py,mx,my,rot,sc);
+  	//renew counter
+    counter ++;
+
+    //rotate?
+     if(counter % 30 == 0)
+     {
+    	rot = rotDir * PI / 24;
+    	rotDir = rotDir * (-1);
+     }
+
+    //motion
+  	 sc += 0.0008;
+     if(sc >= 1)
+      {
+        sc = 0.1; 
+      }
+     mx += width/2500;
+      if (mx+px > 250)
+      {
+        noLoop();
+       }
+
+     my += height/2500;
+      if (mx+px > 250)
+      {
+        noLoop();
+      }
 	
 	// Pole
 	fill(114, 179, 202);
