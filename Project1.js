@@ -20,8 +20,10 @@ var greenAnimalX = 0;
 var greenAnimalY = 69;
 var greenAnimalScale = 1;
 
+var px=300, py =300, mx = 0, my = 0, rot = 0, sc=1;
+
 function setup() {
-	createCanvas(560, 560);
+	createCanvas(560, 1377);
 }
 
 function draw() {
@@ -34,7 +36,141 @@ function draw() {
 	scale(1.4);
 		drawStormPainting();
 	pop();
+
+	noStroke();
+	fill(252, 249, 214);
+	rect(0, 560, 560, 817);
+	// Because the drawing is 560 lower
+	push();
+	translate(0, 560);
+	drawUnDistrait();
+	pop();
 }
+
+//Man in suit
+function manInSuit(px,py,mx,my,rot,sc)
+{
+    push();
+    translate(px+mx,py+my);
+    scale(sc);
+    rotate(rot);
+    fill(123, 69, 7);
+      beginShape();
+      curveVertex(315-300,375-300);
+      curveVertex(301-300,366-300);
+      curveVertex(302-300,320-300);
+      curveVertex(318-300,308-300);
+      curveVertex(330-300,310-300);
+      curveVertex(343-300,327-300);
+      curveVertex(331-300,366-300);
+      curveVertex(325-300,370-300);
+      endShape();
+
+      beginShape();
+      curveVertex(305-300,291-300);
+      curveVertex(301-300,369-300);
+      curveVertex(264-300,390-300);
+      curveVertex(244-300,560-300);
+      curveVertex(295-300,610-300);
+      curveVertex(366-300,594-300);
+      curveVertex(390-300,538-300);
+      curveVertex(370-300,385-300);
+      curveVertex(331-300,366-300);
+      curveVertex(333-300,308-300);
+      endShape();
+
+      beginShape();
+      curveVertex(220-300,550-300);
+      curveVertex(265-300,600-300);
+      curveVertex(300-300,615-300);
+      curveVertex(349-300,653-300);
+      curveVertex(425-300,735-300);
+      curveVertex(425-300,695-300);
+      curveVertex(340-300,560-300);
+      curveVertex(300-300,508-300);
+      endShape();
+  
+      ellipse(436-300, 703-300,17,65);
+
+      beginShape();
+      curveVertex(275-300,552-300);
+      curveVertex(285-300,605-300);
+      curveVertex(293-300,659-300);
+      curveVertex(310-300,695-300);
+      curveVertex(330-300,645-300);
+      curveVertex(350-300,588-300);
+      curveVertex(390-300,530-300);
+      endShape();
+  
+      beginShape();
+      curveVertex(340-300,700-300);
+      curveVertex(310-300,695-300);
+      curveVertex(260-300,680-300);
+      curveVertex(250-300,660-300);
+      curveVertex(320-300,665-300);
+      curveVertex(330-300,675-300);
+      endShape();
+
+      ellipse(250-300,682-300,13,47);
+      ellipse(259-300,702-300,25,10);
+
+
+    fill(234, 96, 87);
+      beginShape();
+      curveVertex(315-300,375-300);
+      curveVertex(301-300,366-300);
+      curveVertex(302-300,320-300);
+      curveVertex(315-300,310-300);
+      curveVertex(328-300,328-300);
+      curveVertex(330-300,340-300);
+      curveVertex(328-300,366-300);
+      curveVertex(325-300,370-300);
+      endShape();
+
+      ellipse(332-300,350-300,6,25);
+      ellipse(302-300,338-300,30,8);
+
+    fill(252, 249, 214);
+      ellipse(436-300, 703-300,10,50);
+
+    fill(123, 69, 7);
+      stroke(123, 69, 7);
+      strokeWeight(15);
+      strokeJoin(ROUND);
+      quad(270-300,565-300, 236-300, 590-300, 261-300, 630-300, 285-300, 615-300);
+
+    fill(117, 133, 1);
+      stroke(117, 133, 1);
+      quad(308-300,369-300, 315-300, 568-300, 330-300,573-300, 325-300,366-300);
+
+  pop();
+}
+
+function drawUnDistrait () {
+	//text "un distrait"
+  	fill(114, 179, 202);
+  	textSize(60);
+  	textFont("Arial Black");
+  	text("UN", 12, 85);
+  	textSize(100);
+  	text("DISTRAIT", 18, 165);
+  	noStroke();
+  
+  	//man in suit 
+  	manInSuit(px,py,mx,my,rot,sc);
+	
+	// Pole
+	fill(114, 179, 202);
+    noStroke();
+    rect(407,290,17, 475);
+
+ 	fill(232,62,0);
+    ellipse(415,245,90);
+
+ 	fill(252, 249, 214);
+    rect(390,240, 53, 13);
+}
+
 
 function drawStormPainting() {
 	background(41, 91, 91);
