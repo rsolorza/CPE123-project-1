@@ -11,7 +11,7 @@ var blueAnimalRotation = 0;
 
 var birdX = 17;
 var birdY = 301;
-var birdScale = .1;
+var birdScale = 1;
 var birdDeltaX = 0; 
 var birdDeltaY = 0;
 var birdDown = false;
@@ -30,7 +30,8 @@ var greenAnimalRotation = 0;
 var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
 
 function setup() {
-	createCanvas(560, 1377);
+	//createCanvas(560, 1377);
+	createCanvas(1120, 817);
 	l1Speed = Math.random() * (14) + 2;
 	y1Speed = Math.random() * (14) + 2;
 	y2Speed = Math.random() * (14) + 2;
@@ -46,20 +47,21 @@ function draw() {
 	if(mouseIsPressed) {
 		console.log((mouseX) + "\n" + (mouseY));
 	}
-
+	//background(41, 91, 91);
+	background (252, 249, 214);
+	noStroke();
+	//fill(252, 249, 214);
+	fill(41, 91, 91);
+	//rect(0, 560, 560, 817);
+	rect(width / 2, 0, width / 2, height);
 	push();
+	translate(width / 2, 0);
 	scale(1.4);
 		drawStormPainting();
 	pop();
 
-	noStroke();
-	fill(252, 249, 214);
-	rect(0, 560, 560, 817);
 	// Because the drawing is 560 lower
-	push();
-	translate(0, 560);
 	drawUnDistrait();
-	pop();
 }
 
 //Man in suit
@@ -218,11 +220,11 @@ function drawUnDistrait () {
 
 
 function drawStormPainting() {
-	background(41, 91, 91);
 
-	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale, blueAnimalRotation);
 	drawBird(birdX, birdY, birdScale);
 
+	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale, blueAnimalRotation);
+	
 	// Far Left Blue lightning Bolt
 	noFill();
 	strokeCap(SQUARE);
@@ -265,7 +267,8 @@ function drawStormPainting() {
 	stroke(140, 181, 208);
 	animateLightningBolt(blueLightning, bLtemp, bLtemp. length - 1, bSpeed);	
 	
-	calculateAnimalAnimations();
+	animateBird();
+	//calculateAnimalAnimations();
 }
 
 
@@ -444,6 +447,7 @@ function drawBird(x, y, size) {
 			triangle(3, 51.5, 56, 5, 52, 56);
 			triangle(48, 13, 45, 12.5, 44.5, 16);
 			triangle(42.5, 18.5, 39, 17, 38.5, 21.5);
+			
 
 			fill(41, 91, 91);
 			beginShape();
@@ -827,6 +831,7 @@ function drawLightningBolt(array) {
 	endShape()	
 }
 
+/*
 function calculateAnimalAnimations () {
 	if(birdDeltaY <= -40)  
 	birdDown = true;
@@ -867,6 +872,17 @@ function calculateAnimalAnimations () {
 		greenAnimalRotation += .02;
 	}
 }
+*/
+
+function animateBird() {
+	if(birdX < 360) {
+		birdX ++;
+	} 
+	if(birdY < 720) {
+		birdY++;
+	}
+}
+
 
 function animateLightningBolt(actual, drawing, index, distance) {
 	if(drawing[index] === actual[index] && index === actual.length - 1) {
