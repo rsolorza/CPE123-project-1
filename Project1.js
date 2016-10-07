@@ -7,23 +7,38 @@
 var blueAnimalX = 43;
 var blueAnimalY = 299;
 var blueAnimalScale = 1;
+var blueAnimalRotation = 0;
 
-var birdX = 307;
-var birdY = 331;
-var birdScale = 1;
+var birdX = 17;
+var birdY = 301;
+var birdScale = .1;
+var birdDeltaX = 0; 
+var birdDeltaY = 0;
+var birdDown = false;
+var birdFinsihed = false;
 
 var redAnimalX = 185;
 var redAnimalY = 55;
 var redAnimalScale = 1;
+var redAnimalRotation = 0;
 
 var greenAnimalX = 0;
 var greenAnimalY = 69;
 var greenAnimalScale = 1;
+var greenAnimalRotation = 0;
 
 var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
 
 function setup() {
 	createCanvas(560, 1377);
+	l1Speed = Math.random() * (14) + 2;
+	y1Speed = Math.random() * (14) + 2;
+	y2Speed = Math.random() * (14) + 2;
+	y3Speed = Math.random() * (14) + 2;
+	wSpeed = Math.random() * (14) + 2;
+	oSpeed = Math.random() * (14) + 2;
+	bSpeed = Math.random() * (14) + 2;
+
 }
 
 function draw() {
@@ -162,13 +177,16 @@ function drawUnDistrait () {
     counter ++;
 
     //rotate?
+	if(birdFinsihed) {
      if(counter % 30 == 0)
      {
     	rot = rotDir * PI / 24;
     	rotDir = rotDir * (-1);
      }
+	}
 
     //motion
+	if(birdFinsihed) {
   	 sc += 0.0008;
      if(sc >= 1)
       {
@@ -185,7 +203,7 @@ function drawUnDistrait () {
       {
         noLoop();
       }
-	
+	}
 	// Pole
 	fill(114, 179, 202);
     noStroke();
@@ -202,138 +220,59 @@ function drawUnDistrait () {
 function drawStormPainting() {
 	background(41, 91, 91);
 
+	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale, blueAnimalRotation);
+	drawBird(birdX, birdY, birdScale);
+
 	// Far Left Blue lightning Bolt
 	noFill();
 	strokeCap(SQUARE);
 
 	stroke(96,175,208);
 	strokeWeight(6);
-	beginShape();
-		vertex (0,182);
-		vertex (20,170);
-		vertex (24, 217);
-		vertex (44, 206);
-		vertex (39, 267);
-		vertex (55, 255);
-		vertex (37, 304);
-	endShape();
+	animateLightningBolt(lightning1, l1temp, l1temp.length - 1, l1Speed);
 
 	// 3rd yellow lightning
 	stroke(247, 213, 58);
 	strokeWeight(7);
-	beginShape();
-		vertex(57, 0);
-		vertex(72, 36);
-		vertex(102, 15);
-		vertex(101, 68);
-		vertex(125, 42);
-		vertex(129, 91);
-		vertex(155, 68);
-		vertex(162, 168);
-	endShape();
+	animateLightningBolt(yellowLightning1, yL1temp, yL1temp.length - 1, y1Speed);
 
 	// Long yellow lightning
 	stroke(244, 181, 60);
 	strokeWeight(8);
-	beginShape();
-		vertex(179, 0);
-		vertex(186, 44);
-		vertex(217, 27);
-		vertex(192, 109);
-		vertex(227, 97);
-		vertex(213, 158);
-		vertex(247, 146);
-		vertex(212, 225);
-		vertex(225, 227);
-		vertex(208, 259);
-		vertex(272, 242);
-		vertex(248, 290);
-		vertex(290, 281);
-		vertex(281, 347);
-	endShape();
+	animateLightningBolt(yellowLightning2, yL2temp, yL2temp.length - 1, y2Speed);
 
 	// Horozontal (ish) lightning
 	strokeWeight(6);
 	stroke(255, 177, 39);
-	beginShape();
-		vertex(238, 248);
-		vertex(241, 178);
-		vertex(262, 186);
-		vertex(278, 148);
-		vertex(304, 169);
-		vertex(308, 126);
-		vertex(338, 144);
-		vertex(345, 107);
-		vertex(370, 126);
-	endShape();
+	animateLightningBolt(yellowLightning3, yL3temp, yL3temp.length - 1, y3Speed);
 
-	drawRedAnimal(redAnimalX, redAnimalY, redAnimalScale);
+	drawRedAnimal(redAnimalX, redAnimalY, redAnimalScale, redAnimalRotation);
 
-	drawGreenAnimal(greenAnimalX, greenAnimalY, greenAnimalScale);
+	drawGreenAnimal(greenAnimalX, greenAnimalY, greenAnimalScale, greenAnimalRotation);
 
 	// White lightning with orange background
 	stroke(254, 253, 254);
-	strokeWeight(3)
-	beginShape();
-		vertex(109,8);
-		vertex(127, -27);
-		vertex(136, 30);
-		vertex(166, 9);
-		vertex(170, 52);
-		vertex(198, 29);
-		vertex(213, 71);
-		vertex(233, 60);
-		vertex(239, 131);
-	endShape();
+	strokeWeight(3);
+	animateLightningBolt(whiteLightning, wLtemp, wLtemp.length - 1, wSpeed);
 
 	// 2nd lightning, orange
 	stroke(236, 119, 64);
 	strokeWeight(7);
-	beginShape();
-		vertex(31, 0);
-		vertex(41, 21);
-		vertex(15, 14);
-		vertex(44, 78);
-		vertex(61, 59);
-		vertex(77, 101);
-		vertex(101, 92);
-		vertex(92, 129);
-		vertex(122, 121);
-		vertex(99, 164);
-		vertex(121, 181);
-		vertex(78, 210);
-		vertex(97, 230);
-		vertex(66, 268);
-	endShape();
+	animateLightningBolt(orangeLightning, oLtemp, oLtemp.length  - 1, oSpeed);
 
-	// Far Right baby blue lightning
+	// far right baby blue lightning
 	strokeWeight(8);
 	stroke(140, 181, 208);
-	beginShape();
-		vertex(310, 0);
-		vertex(301, 27);
-		vertex(325, 27);
-		vertex(304, 76);
-		vertex(329, 79);
-		vertex(309, 110);
-		vertex(329, 110);
-		vertex(311, 201);
-		vertex(362, 181);
-		vertex(346, 259);
-		vertex(371, 248);
-		vertex(357, 295);
-	endShape();
+	animateLightningBolt(blueLightning, bLtemp, bLtemp. length - 1, bSpeed);	
 	
-	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale);
-
-	drawBird(birdX, birdY, birdScale);
-
+	calculateAnimalAnimations();
 }
 
 
-function drawBlueAnimal(x, y, size) {
+function drawBlueAnimal(x, y, size, rotation) {
 	push();
 	translate(x - 43, y - 299);
+	rotate(rotation);
 	scale(size);
 		noStroke();
 		fill(128, 173, 195);
@@ -575,19 +514,10 @@ function drawBird(x, y, size) {
 	pop();
 }
 
-function drawText() {
-	noStroke();
-	fill(255,255,255);
-	rect(0,400,400,116);
-	fill(71, 121, 145);
-	textSize(72);
-	textFont("French Script MT");
-	text("the storm,", 102, 474);
-}
-
-function drawRedAnimal(x, y, size) {
+function drawRedAnimal(x, y, size, rotation) {
 	push();
 		translate(x, y);
+		rotate(rotation);
 		scale(size);
 		noStroke();
 		fill(240, 94, 94);
@@ -722,9 +652,10 @@ function drawRedAnimal(x, y, size) {
 	pop();
 }
 
-function drawGreenAnimal(x, y, size) {
+function drawGreenAnimal(x, y, size, rotation) {
 	push();
 	translate(x, y);
+	rotate(rotation);
 	scale(size);
 		noStroke();
 		fill(86, 135, 69);
@@ -831,3 +762,150 @@ function drawGreenAnimal(x, y, size) {
 
 	pop();
 }
+
+// this next function comes from an adjustment of code from StackOverflow from user coderShop
+function calculateNextPoint(x, y, theta, distance) {
+	var point = [];
+	point.push(Math.sin(theta) * distance + x);
+	point.push(-Math.cos(theta) * distance + y);
+	return point;
+}
+
+// Point 2 = point drawing to, Point 1 = point drawing from
+function calculateTheta(x1, y1, x2, y2) {
+	var theta = null;
+	var phi = null;
+	// if the drawing point is to the left and down of the destination point
+	if(x1 <= x2 && y1 >= y2) {
+		theta = Math.atan((x1 - x2)/
+						  (y2 - y1));
+		console.log("*****Debug 1*****");
+	}
+	// if the drawing point is to the left and up of the destination point
+	if(x1 <= x2 && y1 <= y2) {
+		phi = Math.atan((y2 - y1)/
+						(x2 - x1));
+		theta = ((Math.PI / 2)  + phi);
+		console.log("*****Debug 2*****");
+	}
+	// if the drawing point is to the right and up of the distination point
+	if(x1 >= x2 && y1 <= y2) {
+		phi = Math.atan((x1 - x2)/
+						(y2 - y1));
+		theta = phi + Math.PI;
+		console.log("*****Debug 3*****");
+	}
+	// if the drawing point is to the right and down of the desitnation point
+	if(x1 >= x2 && y1 >= y2) {
+		phi = Math.atan((y1 - y2)/
+						(x1 - x2));
+		theta = phi + (3* Math.PI / 2);
+		console.log("*****Debug 4*****");
+	}
+
+	return theta;
+}
+
+function updatePoints(actual, drawing, theta, index, distance) {
+	var nextPoint = calculateNextPoint(drawing[index][0], drawing[index][1], theta, distance);
+	if(actual[index] === drawing[index] && actual.length !== drawing.length) {
+		drawing.push(drawing[index]);
+	} 
+	// If the next point is pretty close to the point you are approaching
+	if(Math.abs(nextPoint[0] - actual[index][0]) <= distance && Math.abs(nextPoint[1] - actual[index][1]) <= distance) {
+		drawing[index] = actual[index];
+	} else {
+		drawing[index] = nextPoint;
+	}
+}
+
+function drawLightningBolt(array) {
+	beginShape();
+	for(var i = 0; i < array.length; i++) {
+		vertex(array[i][0], array[i][1]);
+	}
+	endShape()	
+}
+
+function calculateAnimalAnimations () {
+	if(birdDeltaY <= -40)  
+	birdDown = true;
+	if(birdDeltaY >= 40) 
+		birdDown = false;
+	if(birdDown && !birdFinsihed) {
+		birdY += 2;
+		birdDeltaY += 2;
+	} else if(!birdDown && !birdFinsihed) {
+		birdY -= 3;
+		birdDeltaY -= 2; 
+	}	
+	if(!birdFinsihed) {	
+		birdDeltaX += .1;
+		birdX += .2;
+		birdScale += .005;
+	}
+
+	if(birdDeltaX >= 50) {
+		birdFinsihed = true;
+	}
+
+	if(!(blueAnimalScale <= 0) && birdDeltaX > 5) {
+		blueAnimalX++;
+		blueAnimalScale -= .01;
+		blueAnimalRotation -= .01;
+	}
+
+	if(!(redAnimalScale <= 0) && birdDeltaX > 30) {
+		redAnimalScale -=.05
+		redAnimalX++;
+		redAnimalRotation += .05;
+	}
+
+	if(!(greenAnimalScale <= 0) && birdDeltaX > 15) {
+		greenAnimalScale -=.02;
+		greenAnimalX++;
+		greenAnimalRotation += .02;
+	}
+}
+
+function animateLightningBolt(actual, drawing, index, distance) {
+	if(drawing[index] === actual[index] && index === actual.length - 1) {
+		drawLightningBolt(actual);
+	}
+	else {
+		updatePoints(actual, 
+				 	drawing, 
+				 	calculateTheta(actual[index - 1][0], actual[index - 1][1], actual[index][0], actual[index][1]),
+				 	index,
+					distance);
+		drawLightningBolt(drawing);
+	}
+}
+
+var lightning1 = [[0, 182], [20, 170], [24, 217], [44, 206], [39, 267], [55, 255], [37, 304]];
+var l1temp = [lightning1[0], lightning1[0]];
+var l1Speed;
+
+var yellowLightning1 = [[57, 0], [72, 36], [102, 15], [101, 68], [125, 42], [129, 91], [155, 68], [162, 168]];
+var yL1temp = [yellowLightning1[0], yellowLightning1[0]];
+var y1Speed;
+
+var yellowLightning2 = [[179, 0], [186, 44], [217, 27], [192, 109], [227, 97], [213, 158], [247, 146], [212, 225], [225, 227], [208, 259], [272, 242], [248, 290], [290, 281], [281, 347]];
+var yL2temp = [yellowLightning2[0], yellowLightning2[0]];
+var y2Speed;
+
+var yellowLightning3 = [[238, 248], [241, 178], [262, 186], [278, 148], [304, 169], [308, 126], [338, 144], [345, 107], [370, 126]];
+var yL3temp = [yellowLightning3[0], yellowLightning3[0]];
+var y3Speed;
+
+var whiteLightning = [[109, 8], [127, -27], [136, 30], [166, 9], [170, 52], [198, 29], [213, 71], [233, 60], [239, 131]];
+var wLtemp = [whiteLightning[0], whiteLightning[0]];
+var wSpeed;
+
+var orangeLightning = [[31, 0], [41, 21], [15, 14], [44, 78], [61, 59], [77, 101], [101, 92] , [92, 129], [122, 121], [99, 164], [121, 181], [78, 210], [97, 230], [66, 268]];
+var oLtemp = [orangeLightning[0], orangeLightning[0]];
+var oSpeed;
+
+var blueLightning = [[310, 0], [301, 27], [325, 27], [304, 76], [329, 79], [309, 110], [329, 110], [311, 201], [362, 181], [346, 259], [371, 248], [357, 295]];
+var bLtemp = [blueLightning[0], blueLightning[0]];
+var bSpeed;
