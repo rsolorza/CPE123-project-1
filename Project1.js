@@ -7,25 +7,18 @@
 var blueAnimalX = 43;
 var blueAnimalY = 299;
 var blueAnimalScale = 1;
-var blueAnimalRotation = 0;
 
 var birdX = 17;
 var birdY = 301;
 var birdScale = 1;
-var birdDeltaX = 0; 
-var birdDeltaY = 0;
-var birdDown = false;
-var birdFinsihed = false;
 
 var redAnimalX = 185;
 var redAnimalY = 55;
 var redAnimalScale = 1;
-var redAnimalRotation = 0;
 
 var greenAnimalX = 0;
 var greenAnimalY = 69;
 var greenAnimalScale = 1;
-var greenAnimalRotation = 0;
 
 var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
 
@@ -47,20 +40,16 @@ function draw() {
 	if(mouseIsPressed) {
 		console.log((mouseX) + "\n" + (mouseY));
 	}
-	//background(41, 91, 91);
 	background (252, 249, 214);
 	noStroke();
-	//fill(252, 249, 214);
 	fill(41, 91, 91);
-	//rect(0, 560, 560, 817);
 	rect(width / 2, 0, width / 2, height);
 	push();
 	translate(width / 2, 0);
 	scale(1.4);
-		drawStormPainting();
+	drawStormPainting();
 	pop();
 
-	// Because the drawing is 560 lower
 	drawUnDistrait();
 }
 
@@ -179,16 +168,13 @@ function drawUnDistrait () {
     counter ++;
 
     //rotate?
-	if(birdFinsihed) {
      if(counter % 30 == 0)
      {
     	rot = rotDir * PI / 24;
     	rotDir = rotDir * (-1);
      }
-	}
 
     //motion
-	if(birdFinsihed) {
   	 sc += 0.0008;
      if(sc >= 1)
       {
@@ -205,7 +191,6 @@ function drawUnDistrait () {
       {
         noLoop();
       }
-	}
 	// Pole
 	fill(114, 179, 202);
     noStroke();
@@ -223,8 +208,8 @@ function drawStormPainting() {
 
 	drawBird(birdX, birdY, birdScale);
 
-	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale, blueAnimalRotation);
-	
+	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale);
+
 	// Far Left Blue lightning Bolt
 	noFill();
 	strokeCap(SQUARE);
@@ -248,9 +233,9 @@ function drawStormPainting() {
 	stroke(255, 177, 39);
 	animateLightningBolt(yellowLightning3, yL3temp, yL3temp.length - 1, y3Speed);
 
-	drawRedAnimal(redAnimalX, redAnimalY, redAnimalScale, redAnimalRotation);
+	drawRedAnimal(redAnimalX, redAnimalY, redAnimalScale);
 
-	drawGreenAnimal(greenAnimalX, greenAnimalY, greenAnimalScale, greenAnimalRotation);
+	drawGreenAnimal(greenAnimalX, greenAnimalY, greenAnimalScale);
 
 	// White lightning with orange background
 	stroke(254, 253, 254);
@@ -268,24 +253,16 @@ function drawStormPainting() {
 	animateLightningBolt(blueLightning, bLtemp, bLtemp. length - 1, bSpeed);	
 	
 	animateBird();
-	//calculateAnimalAnimations();
 }
 
 
-function drawBlueAnimal(x, y, size, rotation) {
+function drawBlueAnimal(x, y, size) {
 	push();
 	translate(x - 43, y - 299);
-	rotate(rotation);
 	scale(size);
 		noStroke();
 		fill(128, 173, 195);
 		rect(43, 299, 161, 79);
-		/* RECT CORNERES 
-			TOP LEFT: 43, 299
-			TOP RIGHT: 204, 299
-			BOTTOM RIGHT: 204, 378
-			BOTTOM LEFT: 43, 378
-		*/
 		fill(41, 91, 91);
 		beginShape();
 			vertex(43, 299);
@@ -518,10 +495,9 @@ function drawBird(x, y, size) {
 	pop();
 }
 
-function drawRedAnimal(x, y, size, rotation) {
+function drawRedAnimal(x, y, size) {
 	push();
 		translate(x, y);
-		rotate(rotation);
 		scale(size);
 		noStroke();
 		fill(240, 94, 94);
@@ -656,10 +632,9 @@ function drawRedAnimal(x, y, size, rotation) {
 	pop();
 }
 
-function drawGreenAnimal(x, y, size, rotation) {
+function drawGreenAnimal(x, y, size) {
 	push();
 	translate(x, y);
-	rotate(rotation);
 	scale(size);
 		noStroke();
 		fill(86, 135, 69);
@@ -830,49 +805,6 @@ function drawLightningBolt(array) {
 	}
 	endShape()	
 }
-
-/*
-function calculateAnimalAnimations () {
-	if(birdDeltaY <= -40)  
-	birdDown = true;
-	if(birdDeltaY >= 40) 
-		birdDown = false;
-	if(birdDown && !birdFinsihed) {
-		birdY += 2;
-		birdDeltaY += 2;
-	} else if(!birdDown && !birdFinsihed) {
-		birdY -= 3;
-		birdDeltaY -= 2; 
-	}	
-	if(!birdFinsihed) {	
-		birdDeltaX += .1;
-		birdX += .2;
-		birdScale += .005;
-	}
-
-	if(birdDeltaX >= 50) {
-		birdFinsihed = true;
-	}
-
-	if(!(blueAnimalScale <= 0) && birdDeltaX > 5) {
-		blueAnimalX++;
-		blueAnimalScale -= .01;
-		blueAnimalRotation -= .01;
-	}
-
-	if(!(redAnimalScale <= 0) && birdDeltaX > 30) {
-		redAnimalScale -=.05
-		redAnimalX++;
-		redAnimalRotation += .05;
-	}
-
-	if(!(greenAnimalScale <= 0) && birdDeltaX > 15) {
-		greenAnimalScale -=.02;
-		greenAnimalX++;
-		greenAnimalRotation += .02;
-	}
-}
-*/
 
 function animateBird() {
 	if(birdX < 360) {
