@@ -21,6 +21,7 @@ var greenAnimalY = 69;
 var greenAnimalScale = 1;
 
 var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
+var poX= 100, poY = 350, daX = 0, daY = 0, sc2 =1;
 
 function setup() {
 	//createCanvas(560, 1377);
@@ -151,6 +152,23 @@ function manInSuit(px,py,mx,my,rot,sc)
 
   pop();
 }
+function pole(poX,poY,daX,daY,sc2)
+	{
+    translate(poX,poY);
+    scale(sc2);
+    
+	fill(114, 179, 202);
+    noStroke();
+    rect(407-380,290-240,17, 475);
+
+ 	fill(232,62,0);
+    ellipse(415-380,245-240,90);
+
+ 	fill(252, 249, 214);
+    rect(390-380,240-240, 53, 13);
+
+  }
+
 
 function drawUnDistrait () {
 	//text "un distrait"
@@ -162,45 +180,41 @@ function drawUnDistrait () {
   	text("DISTRAIT", 18, 165);
   	noStroke();
   
-  	//man in suit 
-  	manInSuit(px,py,mx,my,rot,sc);
   	//renew counter
     counter ++;
 
-    //rotate?
-     if(counter % 30 == 0)
+	//man in suit 
+  	manInSuit(px,py,mx,my,rot,sc);
+
+  	if(counter % 30 == 0)
      {
     	rot = rotDir * PI / 24;
     	rotDir = rotDir * (-1);
      }
 
+      // Pole
+	pole(poX,poY,daX,daY,sc2);
+
     //motion
-  	 sc += 0.0008;
-     if(sc >= 1)
-      {
-        sc = 0.1; 
-      }
+	
      mx += width/2500;
-      if (mx+px > 250)
+      if (mx+px > 500)
       {
-        noLoop();
+        ax += width/3500;
        }
-
-     my += height/2500;
-      if (mx+px > 250)
+      else
       {
-        noLoop();
+      	my += height/2500;
+      	sc += 0.0008;
+      	daX -= width/2500;
+	    daY -= height/2500
+	    sc2 -= 0.0008;
       }
-	// Pole
-	fill(114, 179, 202);
-    noStroke();
-    rect(407,290,17, 475);
 
- 	fill(232,62,0);
-    ellipse(415,245,90);
-
- 	fill(252, 249, 214);
-    rect(390,240, 53, 13);
+      if ((mx + px + ax) > 900)
+      {
+      	noLoop();
+      }
 }
 
 
