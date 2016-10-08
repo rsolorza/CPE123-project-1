@@ -8,9 +8,10 @@ var blueAnimalX = 43;
 var blueAnimalY = 299;
 var blueAnimalScale = 1;
 
-var birdX = 17;
-var birdY = 301;
+var birdX = 107;
+var birdY = 501;
 var birdScale = 1;
+var birdRotate = Math.PI / 3;
 
 var redAnimalX = 185;
 var redAnimalY = 55;
@@ -19,6 +20,9 @@ var redAnimalScale = 1;
 var greenAnimalX = 0;
 var greenAnimalY = 69;
 var greenAnimalScale = 1;
+
+var manAnimationFinished = false;
+var lightningAnimationFinished = false;
 
 var px=100, py =100, mx = 0, my = 0, rot = 0, sc=0.1, counter = 0, rotDir = 1;
 var poX= 100, poY = 350, daX = 0, daY = 0, sc2 =1;
@@ -45,11 +49,13 @@ function draw() {
 	noStroke();
 	fill(41, 91, 91);
 	rect(width / 2, 0, width / 2, height);
+	if (manAnimationFinished){
 	push();
 	translate(width / 2, 0);
 	scale(1.4);
 	drawStormPainting();
 	pop();
+	}
 
 	drawUnDistrait();
 }
@@ -186,7 +192,7 @@ function drawUnDistrait () {
 	//man in suit 
   	manInSuit(px,py,mx,my,rot,sc);
 
-  	if(counter % 30 == 0)
+  	if(counter % 30 == 0 && !manAnimationFinished)
      {
     	rot = rotDir * PI / 24;
     	rotDir = rotDir * (-1);
@@ -197,10 +203,11 @@ function drawUnDistrait () {
 
     //motion
 	
+	if(!manAnimationFinished) {
      mx += width/2500;
       if (mx+px > 500)
       {
-        ax += width/3500;
+        daX += width/3500;
        }
       else
       {
@@ -211,18 +218,23 @@ function drawUnDistrait () {
 	    sc2 -= 0.0008;
       }
 
-      if ((mx + px + ax) > 900)
+      if ((mx + px + daX) > 900)
       {
-      	noLoop();
+      	//noLoop();
+		manAnimationFinished = true;
       }
+	}
 }
 
 
 function drawStormPainting() {
-
-	drawBird(birdX, birdY, birdScale);
-
 	drawBlueAnimal(blueAnimalX, blueAnimalY, blueAnimalScale);
+	
+	if(lightningAnimationFinished) {
+		drawBird(birdX, birdY, birdScale, birdRotate);
+		animateBird();
+	}
+	
 
 	// Far Left Blue lightning Bolt
 	noFill();
@@ -266,7 +278,6 @@ function drawStormPainting() {
 	stroke(140, 181, 208);
 	animateLightningBolt(blueLightning, bLtemp, bLtemp. length - 1, bSpeed);	
 	
-	animateBird();
 }
 
 
@@ -417,10 +428,11 @@ function drawBlueAnimal(x, y, size) {
 	pop();
 }
 
-function drawBird(x, y, size) {
+function drawBird(x, y, size, turn) {
 	push();
 	translate(x, y);
 	scale(size);
+	rotate(turn);
 			noStroke();
 			fill(177, 91, 48);
 			// tail
@@ -821,11 +833,16 @@ function drawLightningBolt(array) {
 }
 
 function animateBird() {
-	if(birdX < 360) {
+	if(birdRotate >=  -Math.PI/2) {
+		birdRotate -= .05;
+	} else {
+
+	}
+	if(birdX < 185) {
 		birdX ++;
 	} 
-	if(birdY < 720) {
-		birdY++;
+	if(birdY > 450) {
+		birdY--;
 	}
 }
 
@@ -833,6 +850,7 @@ function animateBird() {
 function animateLightningBolt(actual, drawing, index, distance) {
 	if(drawing[index] === actual[index] && index === actual.length - 1) {
 		drawLightningBolt(actual);
+		lightningAnimationFinished = true;
 	}
 	else {
 		updatePoints(actual, 
