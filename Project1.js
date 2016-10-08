@@ -286,7 +286,8 @@ function drawBlueAnimal(x, y, size) {
 	translate(x - 43, y - 299);
 	scale(size);
 		noStroke();
-		fill(128, 173, 195);
+		//fill(128, 173, 195);
+		fill(color);
 		rect(43, 299, 161, 79);
 		fill(41, 91, 91);
 		beginShape();
@@ -526,8 +527,8 @@ function drawRedAnimal(x, y, size) {
 		translate(x, y);
 		scale(size);
 		noStroke();
-		fill(240, 94, 94);
-
+		//fill(240, 94, 94);
+		fill(color);
 		// Top-ish leg(?)
 		beginShape();
 			curveVertex(35,2);
@@ -663,8 +664,8 @@ function drawGreenAnimal(x, y, size) {
 	translate(x, y);
 	scale(size);
 		noStroke();
-		fill(86, 135, 69);
-
+		//fill(86, 135, 69);
+		fill(color);
 		// arm and body thing
 		beginShape();
 			curveVertex(221, 57);
